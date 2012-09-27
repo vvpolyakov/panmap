@@ -45,7 +45,7 @@ Get value
 ````
 Save to JSON
 ````javascript
-    MYJSON = $.toJSON($("target").panmap(value));
+    MYJSON = $.toJSON($("target").panmap("value"));
 ````
 Load from JSON
 ````javascript
