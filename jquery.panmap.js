@@ -112,6 +112,7 @@ if (jQuery) (function($){
 	    $(this).get(0).dataRef = data;
 	    $(this).css({width:o.width, height:o.height});
 
+
 	    var mapdata = {
 		zoom: data.center.zoom,
 		center: new google.maps.LatLng(data.center.lat, data.center.lng),
@@ -197,7 +198,7 @@ if (jQuery) (function($){
 			    "<tr><td>"+tr('fillOpacity')+"</td><td><input class=\"panmap-fillOpacity\"></td></tr>";
 			}
 			html +="</table>"+
-			"<button class=\"panmap-save\">"+tr('save')+"</button>";
+			"<button class=\"panmap-save\">"+tr('save')+"</button>"+
 			"<button class=\"panmap-delete\">"+tr('delete')+"</button>";
 		    }
 		    if (data.drawingManager.get("drawingControl") || obj.title > "" || obj.content>"") {
@@ -220,6 +221,15 @@ if (jQuery) (function($){
 				obj.ref.set(varnames[i],obj[varnames[i]]||null);
 			    }
 			    o.change(obj);
+			    infowindow.close();
+			});
+			$(".panmap-delete").click(function(){
+			    obj.ref.setMap(null);
+			    obj.ref = null;
+			    //for (var i in obj) delete obj[i];
+			    //alert(dump(obj));
+			    //for (i in data.objects) if (!data.objects[i]) data.objects.splice(i,1);
+			    infowindow.close();
 			});
 			if ($.fn.miniColors){
 			    $(".panmap-strokeColor").miniColors();
@@ -264,7 +274,12 @@ if (jQuery) (function($){
 	
 	if (o == "value") {
 	    var out = $.extend(true,{},$(this).get(0).dataRef);
-	    for (i in out.objects) {
+	    for (i=0;i<out.objects.length;i++) {
+		if (!out.objects[i].ref) {
+		    out.objects.splice(i,1);
+		    i--;
+		    continue;
+		}
 		switch(out.objects[i].type){
 		    case "marker":
 			out.objects[i].lat = out.objects[i].ref.getPosition().lat();
@@ -297,7 +312,7 @@ if (jQuery) (function($){
 		}
 		out.objects[i].ref = "";
 		delete out.objects[i].ref;
-	    }
+	    } 
 	    out.center.lat=out.map.getCenter().lat();
 	    out.center.lng=out.map.getCenter().lng();
 	    out.center.zoom=out.map.getZoom();
