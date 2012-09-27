@@ -1,0 +1,1 @@
+/home/dasich/panweb/app/js/jquery.panmap.js
