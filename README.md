@@ -25,7 +25,7 @@ Create an instance
             center:{lat:50.11111, lng:20.222222, zoom: 10},
             objects:[
         	{type:"marker", lat:50.11112, lng: ...},
-        	{type:"marker", ...},
+        	{type:"polyline", ...},
         	etc...
             ]
         }
