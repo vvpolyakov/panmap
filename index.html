@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head><title>jQuery plugin "panmap" - demopage</title>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="https://raw.github.com/vvpolyakov/panmap/master/jquery.panmap.js"></script>
+<script>
+$(function(){
+    $("#map").panmap({
+	height:"500px",
+	data:{
+	    center:{lat:50.5555,lng:20.2222,zoom:8},
+	    objects:[
+	    {
+	    "type":"circle",
+	    "strokeColor":"#FF0000",
+	    "strokeOpacity":"1.0",
+	    "strokeWeight":"2",
+	    "fillColor":"#FF0000",
+	    "fillOpacity":"0.35",
+	    "title":"hello",
+	    "content":"world",
+	    "lat":50.496133089978265,
+	    "lng":19.03018339843743,
+	    "radius":43745.67528289531
+	    }
+	    ]
+	},
+	change: function(event){
+	    $("#events").val($("#events").val() + "\n [change]: "+ event.type+"...");
+	}
+    });
+    
+    $("#editable").change(function(){
+	$("#map").panmap("edit",$(this).attr("checked")?true:false);
+    });
+    $("#getvalue").click(function(){
+	$("#result").val(JSON.stringify($("#map").panmap("value"),null,4));
+    });
+
+});
+
+
+</script>
+</head>
+<body>
+   <div id="map"></div>
+   <input type="checkbox" id="editable"><label for="editable"><b>Editable</b></label><br>
+   <button id="getvalue">Get result</button>
+
+   <br>Result:
+   <textarea id="result" style="width:100%; height:200px"></textarea>
+
+   <br>Events:
+   <textarea id="events" style="width:100%; height:100px"></textarea>
+</body>
+</head>
