@@ -41,7 +41,7 @@ Make editable false
 ````
 Get value
 ````javascript
-    $("target").panmap(value);
+    $("target").panmap("value");
 ````
 Save to JSON
 ````javascript
